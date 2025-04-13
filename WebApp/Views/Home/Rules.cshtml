@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Kurallar";
+}
+@model IQueryable<Rule>;
+
+<div class="text-center">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Başlık</th>
+                <th scope="col">Açıklama</th>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                var item = Model.ElementAt(i);
+                <tr align="left">
+                    <th align="center" scope="row">@(i + 1)</th>
+                    <td>@item.Title</td>
+                    <td>@item.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

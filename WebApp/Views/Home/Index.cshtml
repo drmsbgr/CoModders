@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Anasayfa";
+}
+@model IQueryable<ForumGroup>
+
+<div class="text-center">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th colspan="15" style="text-align: left;">Co-Modders forumuna hoşgeldiniz.</th>
+            </tr>
+            <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col" width="70%">Forum</th>
+                <th scope="col">Konular</th>
+                <th scope="col">Gönderiler</th>
+                <th scope="col">Son Gönderi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var group in Model)
+            {
+                <tr style="">
+                    <th style="text-align: left;background-color: rgb(255, 249, 138);" colspan="6">@group.Header</th>
+                </tr>
+                if (group.Forums is null)
+                {
+                    <tr>
+                        <td colspan="10" style="text-align: left;">Bu grupta hiç forum yok.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var forum in group.Forums)
+                    {
+                        <tr>
+                            <th align="center" scope="row"></th>
+                            <td>@forum.Header</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
