@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = Model.Header;
+}
+@model Forum
+
+<div class="text-center">
+    <h2>@Model.Header</h2>
+
+    @if (Model.Threads is null || Model.Threads.Count == 0)
+    {
+        <div class="alert alert-info" role="alert">
+            Bu forumda hiç konu yok.
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col" style="text-align: left;" width="70%">Gönderi</th>
+                    <th scope="col">Yanıtlar</th>
+                    <th scope="col">Görüntülenme</th>
+                    <th scope="col">Son Yanıt</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var thread in Model.Threads)
+                {
+                    <tr>
+                        <th align="center" scope="row"><img class="img-thumbnail" style="width: 35px;" src="" alt=""></th>
+                        <td style="text-align: left;"><a asp-area="" asp-controller="Thread" asp-action="Index"
+                                asp-route-id="@thread.Id">@thread.Header</a></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

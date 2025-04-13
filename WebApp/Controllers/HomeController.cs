@@ -1,29 +1,35 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Repository;
+using Services.Contracts;
 using WebApp.Models;
 
 namespace WebApp.Controllers;
 
-public class HomeController(ILogger<HomeController> logger, RepositoryContext context) : Controller
+public class HomeController(ILogger<HomeController> logger, IServiceManager manager) : Controller
 {
     private readonly ILogger<HomeController> _logger = logger;
-    private readonly RepositoryContext context = context;
+    private readonly IServiceManager _manager = manager;
 
     public IActionResult Index()
     {
-        return View(context.ForumGroups.AsQueryable().AsNoTracking());
+        var forumGroups = _manager.ForumGroupService.GetAllForumGroups(false).AsQueryable().AsNoTracking().Include(r => r.Forums).Where(x => x.Id > 2);
+        var otherGroups = _manager.ForumGroupService.GetAllForumGroups(false).AsQueryable().AsNoTracking().Include(r => r.Forums).Where(x => x.Id <= 2);
+
+        var allGroups = forumGroups.ToList();
+        allGroups.AddRange(otherGroups);
+
+        return View(allGroups.AsQueryable());
     }
 
     public IActionResult Rules()
     {
-        return View(context.Rules.AsQueryable().AsNoTracking());
+        return View(_manager.RuleService.GetAllRules(false).AsQueryable().AsNoTracking());
     }
 
     public IActionResult Faq()
     {
-        return View(context.Questions.AsQueryable().AsNoTracking());
+        return View(_manager.QuestionService.GetAllQuestions(false).AsQueryable().AsNoTracking());
     }
 
     public IActionResult Login()

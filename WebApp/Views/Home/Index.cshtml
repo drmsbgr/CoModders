@@ -11,7 +11,7 @@
             </tr>
             <tr>
                 <th scope="col">&nbsp;</th>
-                <th scope="col" width="70%">Forum</th>
+                <th scope="col" style="text-align: left;" width="70%">Forum</th>
                 <th scope="col">Konular</th>
                 <th scope="col">Gönderiler</th>
                 <th scope="col">Son Gönderi</th>
@@ -34,8 +34,13 @@
                     foreach (var forum in group.Forums)
                     {
                         <tr>
-                            <th align="center" scope="row"></th>
-                            <td>@forum.Header</td>
+                            <th align="center" scope="row"><img class="img-thumbnail" style="width: 35px;" src="@forum.IconUrl"
+                                    alt="">
+                            </th>
+                            <td style="text-align: left;"><a
+                                    class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                    asp-area="" asp-controller="Forum" asp-action="Index" asp-route-id="@forum.Id">@forum.Header</a>
+                            </td>
                             <td></td>
                             <td></td>
                             <td></td>

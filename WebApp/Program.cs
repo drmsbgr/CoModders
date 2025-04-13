@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Repository;
+using Repository.Contracts;
+using Services;
+using Services.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,23 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
     b => b.MigrationsAssembly("WebApp"));
 });
 
+//repo
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+builder.Services.AddScoped<IForumRepository, ForumRepository>();
+builder.Services.AddScoped<IForumGroupRepository, ForumGroupRepository>();
+builder.Services.AddScoped<IRuleRepository, RuleRepository>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IThreadRepository, ThreadRepository>();
+
+//services
+builder.Services.AddScoped<IServiceManager, ServiceManager>();
+builder.Services.AddScoped<IForumService, ForumManager>();
+builder.Services.AddScoped<IForumGroupService, ForumGroupManager>();
+builder.Services.AddScoped<IRuleService, RuleManager>();
+builder.Services.AddScoped<IQuestionService, QuestionManager>();
+builder.Services.AddScoped<IThreadService, ThreadManager>();
+
+builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
